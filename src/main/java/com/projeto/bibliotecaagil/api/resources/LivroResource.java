@@ -1,5 +1,7 @@
 package com.projeto.bibliotecaagil.api.resources;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +22,7 @@ public class LivroResource {
 	private LivroRepository livroRepository;
 	
 	@GetMapping
-	public Iterable<Livro> index() {
+	public List<Livro> index() {
 		return livroRepository.findAll();
 	}
 	
