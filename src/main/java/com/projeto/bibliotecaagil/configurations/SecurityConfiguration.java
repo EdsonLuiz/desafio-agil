@@ -10,6 +10,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.projeto.bibliotecaagil.configurations.jwt.JwtTokenVerifierFilter;
 import com.projeto.bibliotecaagil.configurations.jwt.JwtUserAndPasswordAuthenticationFilter;
 
 @EnableWebSecurity
@@ -36,9 +37,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and()
 			.addFilter(new JwtUserAndPasswordAuthenticationFilter(authenticationManager()))
+			.addFilterAfter(new JwtTokenVerifierFilter(), JwtUserAndPasswordAuthenticationFilter.class)
 			.authorizeRequests()
 			.antMatchers(HttpMethod.POST, "/usuarios/**").permitAll()
-			.antMatchers(HttpMethod.GET, "/livros/**").permitAll()
+			.antMatchers(HttpMethod.GET, "/livros").permitAll()
 			.antMatchers("/h2-console/**").permitAll()
 			.anyRequest().authenticated()
 			.and().headers().frameOptions().sameOrigin();
