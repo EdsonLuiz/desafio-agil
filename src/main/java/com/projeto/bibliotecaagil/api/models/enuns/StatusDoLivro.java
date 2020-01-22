@@ -1,6 +1,6 @@
 package com.projeto.bibliotecaagil.api.models.enuns;
 
-public enum Status {
+public enum StatusDoLivro {
 	DISPONIVEL,
 	INDISPONIVEL
 }
