@@ -48,7 +48,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.addFilterAfter(new JwtTokenVerifierFilter(), JwtUserAndPasswordAuthenticationFilter.class)
 			.authorizeRequests()
 			.antMatchers(HttpMethod.POST, "/usuarios/**").permitAll()
-			.antMatchers("/livros").permitAll()
+			.antMatchers("/livros/**").permitAll()
 			.antMatchers("/h2-console/**").permitAll()
 			.anyRequest().authenticated()
 			.and().headers().frameOptions().sameOrigin();
