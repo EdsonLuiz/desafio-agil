@@ -8,7 +8,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.projeto.bibliotecaagil.api.models.dtos.EmprestimoRequestBodyDTO;
 import com.projeto.bibliotecaagil.api.models.entities.Emprestimo;
 import com.projeto.bibliotecaagil.api.models.entities.Livro;
 import com.projeto.bibliotecaagil.api.models.entities.Usuario;
@@ -24,10 +23,6 @@ public class EmprestimoService {
 	private final EmprestimoRepository emprestimoRepository;
 	private final UsuarioRepository usuarioRepository;
 	private Authentication authentication;
-	
-//	public EmprestimoService() {
-//		this.usuarioRepository = null;
-//	}
 	
 	@Autowired
 	public EmprestimoService(LivroRepository livroRepository, 
@@ -52,7 +47,7 @@ public class EmprestimoService {
 		
 	}
 	
-	public Emprestimo update(EmprestimoRequestBodyDTO dadosDoEmprestimo, Long emprestimoId) {
+	public Emprestimo update(Long emprestimoId) {
 		Emprestimo emprestimoFromDB = emprestimoRepository.findById(emprestimoId).orElse(null);
 		emprestimoFromDB.getLivro().setStatus(Status.DISPONIVEL);
 		emprestimoFromDB.setDataEntrega(LocalDate.now());

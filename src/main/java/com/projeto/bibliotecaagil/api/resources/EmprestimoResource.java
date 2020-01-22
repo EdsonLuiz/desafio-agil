@@ -12,17 +12,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.projeto.bibliotecaagil.api.models.dtos.EmprestimoRequestBodyDTO;
 import com.projeto.bibliotecaagil.api.models.entities.Emprestimo;
-import com.projeto.bibliotecaagil.api.models.repositories.EmprestimoRepository;
 import com.projeto.bibliotecaagil.api.models.services.EmprestimoService;
 
 @RestController
 @RequestMapping("/emprestimos")
 public class EmprestimoResource {
-	
-	@Autowired
-	private EmprestimoRepository emprestimoRepository;
 	
 	@Autowired
 	private EmprestimoService emprestimoService;
@@ -34,14 +29,11 @@ public class EmprestimoResource {
 	
 	@PostMapping
 	public Emprestimo store(@RequestBody Map<String, Long> requestBody) {
-//		System.out.println(numeroLivro.get("numeroLivro"));
-//		return new Emprestimo();
-//		return emprestimoService.store(emprestimoRequestBodyDTO);
 		return emprestimoService.store(requestBody.get("numeroLivro"));
 	}
 	
 	@PutMapping("/{emprestimoId}")
-	public Emprestimo update(@PathVariable Long emprestimoId , @RequestBody EmprestimoRequestBodyDTO emprestimoRequestBodyDTO) {
-		return emprestimoService.update(emprestimoRequestBodyDTO, emprestimoId);
+	public Emprestimo update(@PathVariable Long emprestimoId) {
+		return emprestimoService.update(emprestimoId);
 	}
 }
