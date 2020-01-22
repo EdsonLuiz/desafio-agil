@@ -1,6 +1,7 @@
 package com.projeto.bibliotecaagil.api.resources;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,12 +29,15 @@ public class EmprestimoResource {
 	
 	@GetMapping
 	public List<Emprestimo> index() {
-		return emprestimoRepository.findAll();
+		return emprestimoService.index();
 	}
 	
 	@PostMapping
-	public Emprestimo store(@RequestBody EmprestimoRequestBodyDTO emprestimoRequestBodyDTO) {
-		return emprestimoService.store(emprestimoRequestBodyDTO);
+	public Emprestimo store(@RequestBody Map<String, Long> requestBody) {
+//		System.out.println(numeroLivro.get("numeroLivro"));
+//		return new Emprestimo();
+//		return emprestimoService.store(emprestimoRequestBodyDTO);
+		return emprestimoService.store(requestBody.get("numeroLivro"));
 	}
 	
 	@PutMapping("/{emprestimoId}")

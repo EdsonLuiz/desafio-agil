@@ -11,6 +11,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
+import com.projeto.bibliotecaagil.api.models.dtos.UsuarioDTO;
+
 @Entity
 @Table(name = "emprestimos")
 public class Emprestimo {
@@ -22,6 +24,9 @@ public class Emprestimo {
 	@OneToOne
 	private Livro livro;
 	
+	@OneToOne
+	private Usuario usuario;
+	
 	@Column(name = "data_retirada", nullable = false)
 	private LocalDate dataRetirada;
 	
@@ -32,13 +37,11 @@ public class Emprestimo {
 	}
 	
 	
-
-	public Emprestimo(Livro livro) {
+	public Emprestimo(Livro livro, Usuario usuario) {
 		super();
 		this.livro = livro;
+		this.usuario = usuario;
 	}
-
-
 
 	public Long getId() {
 		return id;
@@ -76,6 +79,20 @@ public class Emprestimo {
 	public void setDataEntrega(LocalDate dataEntrega) {
 		this.dataEntrega = dataEntrega;
 	}
+	
+	
+
+	public UsuarioDTO getUsuario() {
+		return new UsuarioDTO(this.usuario);
+	}
+
+
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+
 
 	@Override
 	public int hashCode() {
