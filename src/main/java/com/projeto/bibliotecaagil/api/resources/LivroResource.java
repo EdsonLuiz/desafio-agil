@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.projeto.bibliotecaagil.api.models.entities.Livro;
+import com.projeto.bibliotecaagil.api.models.enuns.StatusDoLivro;
 import com.projeto.bibliotecaagil.api.models.repositories.LivroRepository;
 
 @RestController
@@ -30,5 +31,10 @@ public class LivroResource {
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public Livro store(@RequestBody Livro livro ) {
 		return livroRepository.save(livro);
+	}
+	
+	@GetMapping("/disponivel")
+	public List<Livro> findAllDisponivel() {
+		return livroRepository.findAllByStatus(StatusDoLivro.DISPONIVEL);
 	}
 }

@@ -12,7 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
-import com.projeto.bibliotecaagil.api.models.enuns.Status;
+import com.projeto.bibliotecaagil.api.models.enuns.StatusDoLivro;
 
 @Entity
 @Table(name = "livros")
@@ -31,7 +31,7 @@ public class Livro implements Serializable {
 	private String anoPublicado;
 
 	@Enumerated(EnumType.STRING)
-	private Status status;
+	private StatusDoLivro status;
 
 	public Long getNumero() {
 		return numero;
@@ -41,7 +41,7 @@ public class Livro implements Serializable {
 
 	}
 
-	public Livro(Long numero, String titulo, String autor, String anoPublicado, Status status) {
+	public Livro(Long numero, String titulo, String autor, String anoPublicado, StatusDoLivro status) {
 		super();
 		this.numero = numero;
 		this.titulo = titulo;
@@ -80,14 +80,14 @@ public class Livro implements Serializable {
 
 	@PrePersist
 	public void defaultStatusOnCreate() {
-		this.status = Status.DISPONIVEL;
+		this.status = StatusDoLivro.DISPONIVEL;
 	}
 	
-	public Status getStatus() {
+	public StatusDoLivro getStatus() {
 		return status;
 	}
 
-	public void setStatus(Status status) {
+	public void setStatus(StatusDoLivro status) {
 		this.status = status;
 	}
 

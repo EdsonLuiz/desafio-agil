@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import com.projeto.bibliotecaagil.api.models.entities.Emprestimo;
 import com.projeto.bibliotecaagil.api.models.entities.Livro;
 import com.projeto.bibliotecaagil.api.models.entities.Usuario;
-import com.projeto.bibliotecaagil.api.models.enuns.Status;
+import com.projeto.bibliotecaagil.api.models.enuns.StatusDoLivro;
 import com.projeto.bibliotecaagil.api.models.repositories.EmprestimoRepository;
 import com.projeto.bibliotecaagil.api.models.repositories.LivroRepository;
 import com.projeto.bibliotecaagil.api.models.repositories.UsuarioRepository;
@@ -19,10 +19,13 @@ import com.projeto.bibliotecaagil.api.models.repositories.UsuarioRepository;
 @Service
 public class EmprestimoService {
 
-	private final LivroRepository livroRepository;
-	private final EmprestimoRepository emprestimoRepository;
-	private final UsuarioRepository usuarioRepository;
+	private LivroRepository livroRepository;
+	private EmprestimoRepository emprestimoRepository;
+	private UsuarioRepository usuarioRepository;
 	private Authentication authentication;
+	
+	public EmprestimoService() {
+	}
 	
 	@Autowired
 	public EmprestimoService(LivroRepository livroRepository, 
@@ -32,6 +35,8 @@ public class EmprestimoService {
 		this.livroRepository = livroRepository;
 		this.emprestimoRepository = emprestimoRepository;
 	}
+	
+
 
 	public List<Emprestimo> index() {
 		return emprestimoRepository.findAllByUsuarioEmailAndDataEntregaIsNull("edson@edson.com");
@@ -41,7 +46,7 @@ public class EmprestimoService {
 		Livro livroFromDB = livroRepository.findById(numeroLivro).orElse(null);
 		authentication = SecurityContextHolder.getContext().getAuthentication();
 		Usuario usuario = usuarioRepository.findByEmail(authentication.getName()).orElse(null);
-		livroFromDB.setStatus(Status.INDISPONIVEL);
+		livroFromDB.setStatus(StatusDoLivro.INDISPONIVEL);
 		Emprestimo emprestimo = new Emprestimo(livroFromDB, usuario);
 		return emprestimoRepository.save(emprestimo);
 		
@@ -49,7 +54,7 @@ public class EmprestimoService {
 	
 	public Emprestimo update(Long emprestimoId) {
 		Emprestimo emprestimoFromDB = emprestimoRepository.findById(emprestimoId).orElse(null);
-		emprestimoFromDB.getLivro().setStatus(Status.DISPONIVEL);
+		emprestimoFromDB.getLivro().setStatus(StatusDoLivro.DISPONIVEL);
 		emprestimoFromDB.setDataEntrega(LocalDate.now());
 		return emprestimoRepository.save(emprestimoFromDB);
 	}
