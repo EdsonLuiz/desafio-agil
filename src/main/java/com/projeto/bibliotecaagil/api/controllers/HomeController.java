@@ -1,0 +1,19 @@
+package com.projeto.bibliotecaagil.api.controllers;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class HomeController {
+	@GetMapping({ "/index", "/", "/home", "" })
+	public String reactApp() {
+		return "index";
+	}
+	
+    @RequestMapping(value = "/**/{path:[^.]*}")       
+    public String redirect() {
+        // Forward to home page so that route is preserved.
+        return "forward:/";
+    }
+}

@@ -39,15 +39,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
-			.cors().configurationSource(corsConfigurationSource())
-			.and()
-			.csrf().disable()
-			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-			.and()
-			.addFilter(new JwtUserAndPasswordAuthenticationFilter(authenticationManager()))
-			.addFilterAfter(new JwtTokenVerifierFilter(), JwtUserAndPasswordAuthenticationFilter.class)
-			.authorizeRequests()
+		.cors().configurationSource(corsConfigurationSource())
+		.and()
+		.csrf().disable()
+		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+		.and()
+		.addFilter(new JwtUserAndPasswordAuthenticationFilter(authenticationManager()))
+		.addFilterAfter(new JwtTokenVerifierFilter(), JwtUserAndPasswordAuthenticationFilter.class)
+		.authorizeRequests()
+			.antMatchers("/js/**", "/css/**", "/img/**", "/").permitAll()
 			.antMatchers(HttpMethod.POST, "/usuarios/**").permitAll()
+			.antMatchers("/login/**").permitAll()
 			.antMatchers("/livros/**").permitAll()
 			.antMatchers("/h2-console/**").permitAll()
 			.anyRequest().authenticated()
@@ -57,7 +59,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200", "http://localhost:8080"));
         configuration.setAllowedMethods(Arrays.asList("GET","POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowCredentials(true);
         configuration.setAllowedHeaders(Arrays.asList("Content-Type", "Authorization"));
