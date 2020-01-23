@@ -39,7 +39,8 @@ public class EmprestimoService {
 
 
 	public List<Emprestimo> index() {
-		return emprestimoRepository.findAllByUsuarioEmailAndDataEntregaIsNull("edson@edson.com");
+		authentication = SecurityContextHolder.getContext().getAuthentication();
+		return emprestimoRepository.findAllByUsuarioEmailAndDataEntregaIsNull(authentication.getName());
 	}
 
 	public Emprestimo store(Long numeroLivro) {
