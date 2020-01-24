@@ -35,12 +35,13 @@ public class UsuarioResource {
 			usuario.setPassword(this.passwordEncoder.encode(usuario.getPassword()));
 			novoUsuario = usuarioRepository.save(usuario);
 			novoUsuario.setPassword("");
+			return new ResponseEntity<Usuario>(novoUsuario, HttpStatus.CREATED);
 		} catch (DataAccessException e) {
 			response.put("error", "Usuário não pode ser criado");
 			return new ResponseEntity<Map<String, String>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
 		
-		return new ResponseEntity<Usuario>(novoUsuario, HttpStatus.CREATED);
+		
 	}
 }
